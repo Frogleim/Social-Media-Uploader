@@ -1,0 +1,9 @@
+file.png
+uploads
+static
+.idea
+__pycache__
+test-video.mp4
+accounts.txt
+config
+uploader/__pycache__

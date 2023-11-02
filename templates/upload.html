@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Video Uploader</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Instagram</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Tik Tok</a>
+        </li>
+
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+    <title>File Upload Example</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+<!--            align-items: center;-->
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .container {
+            text-align: center;
+            max-width: 400px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+            z-index: 999; /* Place the overlay behind other content */
+            display: none; /* Initially hide the overlay */
+        }
+        .loader {
+            border: 16px solid #f3f3f3; /* Light grey */
+            border-top: 16px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Center the loader in the middle of the page */
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Upload a File</h1>
+        <form id="upload-form" method="POST" action="/upload" enctype="multipart/form-data">
+            <input type="file" name="file" class="form-control">
+            <input type="submit" value="Upload" class="btn btn-primary mt-3">
+        </form>
+    </div>
+    <div class="overlay">
+        <div class="loader"></div>
+    </div>
+
+    <script>
+        const uploadForm = document.getElementById("upload-form");
+        const overlay = document.querySelector(".overlay");
+
+        // Add an event listener to the form submission
+        uploadForm.addEventListener("submit", function (event) {
+            // Show the overlay and loader when the form is submitted
+            overlay.style.display = "block";
+        });
+
+        // You can hide the overlay and loader when the file upload is complete.
+        // You might need to use an AJAX request and listen for the response
+        // from the server to determine when the upload is finished.
+        // The following code is a placeholder for demonstration purposes:
+
+        // Simulate hiding the overlay and loader after a brief delay (adjust as needed)
+        setTimeout(function () {
+            overlay.style.display = "none";
+        }, 3000);
+    </script>
+</body>
+</html>
