@@ -9,11 +9,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Instagram</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Tik Tok</a>
+          <a class="nav-link" href="/tiktok">Tik Tok</a>
         </li>
 
 
@@ -72,10 +70,15 @@
 <body>
 
     <div class="container">
-        <h1>Upload a File</h1>
+        <h1>Instagram Uploader</h1>
         <form id="upload-form" method="POST" action="/upload" enctype="multipart/form-data">
             <input type="file" name="file" class="form-control">
+            <br>
+        <label for="caption">Caption:</label>
+        <input type="text" name="caption" class="form-control">
+        <br>
             <input type="submit" value="Upload" class="btn btn-primary mt-3">
+
         </form>
     </div>
     <div class="overlay">

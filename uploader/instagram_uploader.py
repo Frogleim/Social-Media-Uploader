@@ -18,20 +18,22 @@ def read_accounts():
     return file_contents
 
 
-def login(file):
+def login(file, caption):
     start_time = time.time()
     accounts_list = read_accounts()
     data = accounts_list.split('\n')
-    for accounts in data[1:3]:
+    for accounts in data[4:]:
         username = accounts.split(':')[1]
         password = accounts.split(':')[0]
+        print(username)
+        print(password)
         try:
             bot = Bot()
             bot.login(username=username,
-                      password=password)
+                      password=password, is_threaded=True)
             time.sleep(random.uniform(1.5, 2))
             bot.upload_video(file,
-                             caption="Technical Scripter Event")
+                             caption=caption)
         except Exception as e:
             print(f'Failed\n{e}')
         time.sleep(random.uniform(3.6, 6.958))
@@ -42,6 +44,5 @@ def login(file):
 
 
 if __name__ == "__main__":
-    get_videos_dir()
     accounts = read_accounts()
     print(accounts)
