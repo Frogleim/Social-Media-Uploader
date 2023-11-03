@@ -75,8 +75,13 @@
         <input type="text" name="caption" class="form-control">
         <br>
             <input type="submit" value="Upload" class="btn btn-primary mt-3">
+<br>
 
         </form>
+        <form id="upload-forms" method="POST" action="/unzip_cookies" enctype="multipart/form-data">
+            <input type="file" name="file" class="form-control">
+                <input type="submit" value="Unzip" class="btn btn-primary mt-3">
+                </form>
     </div>
     <div class="overlay">
         <div class="loader"></div>

@@ -1,17 +1,30 @@
 from flask import Flask, render_template, request
 import os
-from uploader import instagram_uploader, tik_tok_uploader
+from uploader import instagram_uploader, tik_tok_uploader, set_up_cookies
+import shutil
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'  # Directory to store uploaded files
+COOKIES_UPLOAD_FOLDER = 'uploads'  # Directory to store uploaded files
+
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
-def get_videos_dir():
+def get_main_dir():
     base_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(base_dir)
+    return parent_dir
+
+
+def get_uploads_dir():
+    base_dir = os.path.dirname(os.path.abspath(__file__))
     files_dir = os.path.join(base_dir, 'uploads')
-    print(files_dir)
+    return files_dir
+
+
+def get_accounts_dir():
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    files_dir = os.path.join(base_dir, 'uploader\\instagram_accounts')
     return files_dir
 
 
@@ -39,7 +52,7 @@ def instagram_upload_file():
     if file:
         filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(filename)
-        video_dir = get_videos_dir()
+        video_dir = get_uploads_dir()
         try:
             mp4_files = [os.path.join(video_dir, f) for f in os.listdir(video_dir) if f.endswith('.mp4')]
             print(mp4_files[0])
@@ -63,7 +76,7 @@ def tiktok_upload_file():
     if file:
         filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
         file.save(filename)
-        video_dir = get_videos_dir()
+        video_dir = get_uploads_dir()
         try:
             mp4_files = [os.path.join(video_dir, f) for f in os.listdir(video_dir) if f.endswith('.mp4')]
             print(mp4_files[0])
@@ -71,6 +84,49 @@ def tiktok_upload_file():
         except Exception as e:
             print(e)
         return f"File '{file.filename}' uploaded successfully with caption: {caption}!"
+
+
+@app.route('/unzip_cookies', methods=['POST'])
+def unzip_upload_file():
+    if 'file' not in request.files:
+        return "No file part"
+
+    file = request.files['file']
+    if file.filename == '':
+        return "No selected file"
+
+    if file:
+        filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+        file.save(filename)
+        zip_dir = get_uploads_dir()
+        try:
+            zip_files = [os.path.join(zip_dir, f) for f in os.listdir(zip_dir) if f.endswith('.zip')]
+            set_up_cookies.unzip_cookies(zip_files[0])
+        except Exception as e:
+            print(e)
+        return render_template('success.html')
+
+
+@app.route('/save_accounts', methods=['POST'])
+def save_accounts_file():
+    if 'file' not in request.files:
+        return "No file part"
+
+    file = request.files['file']
+    if file.filename == '':
+        return "No selected file"
+
+    if file:
+        filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+        file.save(filename)
+        accounts_dir = get_accounts_dir()
+        uploads_dir = get_uploads_dir()
+        try:
+            accounts_file = [os.path.join(uploads_dir, f) for f in os.listdir(uploads_dir) if f.endswith('.txt')]
+            shutil.move(accounts_file[0], accounts_dir)
+        except Exception as e:
+            print(e)
+        return render_template('success.html')
 
 
 if __name__ == '__main__':

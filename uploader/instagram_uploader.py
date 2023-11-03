@@ -13,7 +13,7 @@ def get_accounts_dir():
 
 def read_accounts():
     main_dir = get_accounts_dir()
-    with open(f'{main_dir}\\accounts.txt', 'r') as file:
+    with open(f'{main_dir}\\uploader\\instagram_accounts\\accounts.txt', 'r') as file:
         file_contents = file.read()
     return file_contents
 
